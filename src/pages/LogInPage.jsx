@@ -28,6 +28,8 @@ export default function LogIn() {
     }
 
     function loginHandler(promise) {
+        console.log(promise.data);
+
         if (promise.data.membership === null) {
             navigate('/subscriptions');
             setEmail('');
