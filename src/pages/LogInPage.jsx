@@ -78,7 +78,7 @@ export default function LogIn() {
 }
 
 const PageBody = styled.div`
-    height: 100px;
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;

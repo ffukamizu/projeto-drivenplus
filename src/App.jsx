@@ -21,7 +21,7 @@ function App() {
                     element={<SignUp />}
                 />
                 <Route
-                    path="/subscriptions/:id"
+                    path="/subscriptions/"
                     element={<Subscriptions />}
                 />
                 <Route
