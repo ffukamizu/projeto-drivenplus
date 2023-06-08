@@ -2,9 +2,11 @@ import styled from 'styled-components';
 import Logo from './../../public/assets/DrivenLogo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 export default function LogIn() {
+    const { setAuthToken } = useContext(AuthContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -18,17 +20,17 @@ export default function LogIn() {
         };
 
         axios
-        .post('https://mock-api.driven.com.br/api/v4/driven-plus/auth/login', user)
-        .then(loginHandler)
-        .catch(() => {
-            alert('Log-in failed');
-            setEmail('');
-            setPassword('');
-        });
+            .post('https://mock-api.driven.com.br/api/v4/driven-plus/auth/login', user)
+            .then(loginHandler)
+            .catch(() => {
+                alert('Log-in failed');
+                setEmail('');
+                setPassword('');
+            });
     }
 
     function loginHandler(promise) {
-        console.log(promise.data);
+        setAuthToken(promise.data.token);
 
         if (promise.data.membership === null) {
             navigate('/subscriptions');

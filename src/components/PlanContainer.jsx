@@ -1,16 +1,21 @@
-import styled from "styled-components";
-import DrivenGreen from './../../public/assets/DrivenGreen.png';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default function Plan(props) {
     return (
-    <PlanContainer>
-        <div>
-            <img src={props.image} alt='Plano' />
-        </div>
-        <div>
-            <h2>R$ {props.price}</h2>
-        </div>
-    </PlanContainer>
+        <Link to={`/subscriptions/${props.features.id}`}>
+            <PlanContainer>
+                <div>
+                    <img
+                        src={props.features.image}
+                        alt="Plano"
+                    />
+                </div>
+                <div>
+                    <h2>R$ {props.features.price}</h2>
+                </div>
+            </PlanContainer>
+        </Link>
     );
 }
 

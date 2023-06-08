@@ -1,21 +1,42 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 import Plan from './../components/PlanContainer';
-import axios from "axios";
-import { useState } from "react";
+import axios from 'axios';
+import PlanContainer from './../components/PlanContainer';
+import { useState, useContext, useEffect } from 'react';
+import { AuthContext } from './../context/AuthContext';
 
 export default function Subscriptions() {
+    const { token } = useContext(AuthContext);
     const [membership, setMembership] = useState([]);
 
-    axios.get('https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships', config)
-    .then((promise)=>setMembership(promise.data))
-    .catch((promise)=>console.log(promise.response));
+    useEffect(() => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+
+        axios
+            .get('https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships', config)
+            .then(membershipHandler)
+            .catch((promise) => console.log(promise.response));
+    }, [token]);
+
+    function membershipHandler(promise) {
+        console.log(promise.data);
+        setMembership(promise.data);
+    }
 
     return (
         <PageBody>
             <ContentContainer>
                 <Title>Escolha seu Plano</Title>
-                {membership.map(())}
-                <Plan />
+                {membership.map((item, index) => (
+                    <Plan
+                        key={index}
+                        features={item}
+                    />
+                ))}
             </ContentContainer>
         </PageBody>
     );
