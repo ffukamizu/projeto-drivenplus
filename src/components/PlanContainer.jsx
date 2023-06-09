@@ -29,6 +29,7 @@ const PlanContainer = styled.li`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 
     div {
         display: flex;

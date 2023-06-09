@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Plan from './../components/PlanContainer';
 import axios from 'axios';
-import PlanContainer from './../components/PlanContainer';
 import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from './../context/AuthContext';
 
@@ -23,7 +22,6 @@ export default function Subscriptions() {
     }, [token]);
 
     function membershipHandler(promise) {
-        console.log(promise.data);
         setMembership(promise.data);
     }
 
@@ -65,4 +63,5 @@ const Title = styled.h1`
     font-size: 32px;
     line-height: 38px;
     color: #ffffff;
+    margin-block: 30px;
 `;

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LogIn from './pages/LogInPage';
 import SignUp from './pages/SignUpPage';
 import Subscriptions from './pages/SubscriptionsPage';
+import Subscription from './pages/ChosenSubscriptionPage';
 import Home from './pages/HomePage';
 
 function App() {
@@ -23,6 +24,10 @@ function App() {
                 <Route
                     path="/subscriptions/"
                     element={<Subscriptions />}
+                />
+                <Route
+                    path="/subscriptions/:id"
+                    element={<Subscription />}
                 />
                 <Route
                     path="/home"
