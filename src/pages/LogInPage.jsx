@@ -3,12 +3,15 @@ import Logo from './../../public/assets/DrivenLogo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
 import { SubscriptionContext } from './../context/SubscriptionContext';
+import { AuthContext } from '../context/AuthContext';
+import { UserContext } from '../context/UserContext';
 
 export default function LogIn() {
     const { setAuthToken } = useContext(AuthContext);
     const { saveSubscriptionData } = useContext(SubscriptionContext);
+    const { setUserName } = useContext(UserContext);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -33,7 +36,8 @@ export default function LogIn() {
 
     function loginHandler(promise) {
         setAuthToken(promise.data.token);
-        saveSubscriptionData(promise.data);
+        saveSubscriptionData(promise.data.membership);
+        setUserName(promise.data.name);
 
         if (promise.data.membership === null) {
             navigate('/subscriptions');

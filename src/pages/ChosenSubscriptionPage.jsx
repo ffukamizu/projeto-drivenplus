@@ -3,10 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import { AuthContext } from './../context/AuthContext';
+import { SubscriptionContext } from './../context/SubscriptionContext';
 
 export default function Subscription() {
     const { token } = useContext(AuthContext);
     const { id } = useParams();
+    const { saveSubscriptionData } = useContext(SubscriptionContext);
     const [subscription, setSubscription] = useState(null);
     const [holder, setHolder] = useState('');
     const [card, setCard] = useState('');
@@ -50,7 +52,8 @@ export default function Subscription() {
 
         axios
             .post(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions`, subscribe, config)
-            .then(() => {
+            .then((promise) => {
+                saveSubscriptionData(promise.data.membership);
                 setHolder('');
                 setCard('');
                 setSecurity('');

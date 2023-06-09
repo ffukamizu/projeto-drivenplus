@@ -3,11 +3,13 @@ import { SubscriptionContext } from './../context/SubscriptionContext';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './../context/AuthContext';
+import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 
 export default function Home() {
     const { subscriptionData } = useContext(SubscriptionContext);
     const { token } = useContext(AuthContext);
+    const { userName } = useContext(UserContext);
     const navigate = useNavigate();
 
     if (subscriptionData === null) {
@@ -36,14 +38,14 @@ export default function Home() {
             <ContentContainer>
                 <Logo>
                     <img
-                        src={subscriptionData.membership.image}
+                        src={subscriptionData.image}
                         alt="Logo"
                     />
                 </Logo>
                 <Title>
-                    <p>Olá, {subscriptionData.name}</p>
+                    <p>Olá, {userName}</p>
                 </Title>
-                {subscriptionData.membership.perks.map((item, index) => (
+                {subscriptionData.perks.map((item, index) => (
                     <PerkButton
                         key={index}
                         href={item.link}>
