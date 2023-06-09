@@ -1,12 +1,34 @@
 import styled from 'styled-components';
 import { SubscriptionContext } from './../context/SubscriptionContext';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './../context/AuthContext';
+import axios from 'axios';
 
 export default function Home() {
     const { subscriptionData } = useContext(SubscriptionContext);
+    const { token } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     if (subscriptionData === null) {
         return null;
+    }
+
+    function changePlan() {
+        navigate('/subscriptions');
+    }
+
+    function cancelPlan() {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+
+        axios
+            .delete(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions`, config)
+            .then(() => navigate('/subscriptions'))
+            .catch((promise) => console.log(promise.response));
     }
 
     return (
@@ -28,6 +50,8 @@ export default function Home() {
                         {item.title}
                     </PerkButton>
                 ))}
+                <ChangePlan type='button' onClick={changePlan}>Mudar plano</ChangePlan>
+                <CancelPlan type='button'onClick={cancelPlan}>Cancelar plano</CancelPlan>
             </ContentContainer>
         </PageBody>
     );
@@ -111,4 +135,43 @@ const PerkButton = styled.a`
     :active {
         text-decoration: none;
     }
+`;
+
+const ChangePlan = styled.button`
+    height: 50px;
+    width: 306px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ff4791;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: #ff4791;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ffffff;
+    margin-bottom: 8px;
+    margin-top: 10vh;
+`;
+
+const CancelPlan = styled.button`
+    height: 50px;
+    width: 306px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ff4747;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: #ff4747;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ffffff;
+    margin-bottom: 8px;
 `;
