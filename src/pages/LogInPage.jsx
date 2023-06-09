@@ -4,9 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { SubscriptionContext } from './../context/SubscriptionContext';
 
 export default function LogIn() {
     const { setAuthToken } = useContext(AuthContext);
+    const { saveSubscriptionData } = useContext(SubscriptionContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -31,6 +33,7 @@ export default function LogIn() {
 
     function loginHandler(promise) {
         setAuthToken(promise.data.token);
+        saveSubscriptionData(promise.data);
 
         if (promise.data.membership === null) {
             navigate('/subscriptions');
